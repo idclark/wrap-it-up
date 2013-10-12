@@ -39,7 +39,7 @@ def current_account_info(client):
             returns json
     """
     response = client.get(r'http://www.reddit.com/api/me.json')
-    acc_info = response['data']
+    acc_info = response.json()['data']
     if not acc_info:
         raise Exception('No data found, Please login')
     return acc_info
