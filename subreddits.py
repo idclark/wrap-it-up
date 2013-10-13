@@ -1,6 +1,6 @@
 import requests
 
-def get_subreddit_info(client, limit, sr, sort, **kwargs):
+def get_subreddit_info(limit, sr, sort, **kwargs):
     """client: a user_login() session
        limit: num of stories returned from 1:100
        sr: subreddit or serries using +

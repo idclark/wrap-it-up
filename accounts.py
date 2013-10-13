@@ -24,13 +24,26 @@ def user_login(user_name, password, bot_desc):
     client.user = user_name
     return client
 
+# TODO how does python handle captcha
+def register_account(user, pword, rem=True, captacha=None):
+    """
+    Create a new Reddit account.
+    """
+    user_information = {'user': user,
+                        'passwd': pword,
+                        'passwd2': pword,
+                        'captcha': captacha,
+                        'rem': rem}
 
-def register_account():
-    pass
 
-
-def delete_account():
-    pass
+def delete_account(user, pword, confirm=True):
+    """
+    LOGIN REQUIRED. input a user and password. confirmation default is True
+    """
+    data = {'user': user, 'passwd': pword, 'confirm': confirm, 'api_type': 'json'}
+    client = user_login(user, pword, 'foo_bar')
+    response = client.post(r'http://www.reddit.com/api/delete_user', data=data)
+    return response
 
 
 def current_account_info(client):
@@ -41,7 +54,7 @@ def current_account_info(client):
     response = client.get(r'http://www.reddit.com/api/me.json')
     acc_info = response.json()['data']
     if not acc_info:
-        raise Exception('No data found, Please login')
+        raise Exception('No data found, Please user user_login() to log in')
     return acc_info
 
 
