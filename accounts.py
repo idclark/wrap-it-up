@@ -24,16 +24,23 @@ def user_login(user_name, password, bot_desc):
     client.user = user_name
     return client
 
-# TODO how does python handle captcha
-def register_account(user, pword, rem=True, captacha=None):
+# client is required to get around captcha
+def register_account(client, user, pword, rem=True, captcha=None):
     """
-    Create a new Reddit account.
+    Create a new Reddit account via a valid reddit account. log in with user_login()
+    one logged in, you can register new accounts every five minutes without entering captcha.
     """
     user_information = {'user': user,
                         'passwd': pword,
                         'passwd2': pword,
-                        'captcha': captacha,
-                        'rem': rem}
+                        'captcha': captcha,
+                        'rem': rem,
+                        'api_type': 'json'}
+    response = client.post(r'http://www.reddit.com/api/register', data=user_information)
+    if response.json()['json']['errors']:
+        error_dict = response.json()['json']['errors']
+        raise Exception('Error: '+error_dict[0][0])
+    return response
 
 
 def delete_account(user, pword, confirm=True):
@@ -49,13 +56,22 @@ def delete_account(user, pword, confirm=True):
 def current_account_info(client):
     """
     client: the client created from the user_login() function.
-            returns json
+            returns dict (json) of the current user's account overview.
     """
     response = client.get(r'http://www.reddit.com/api/me.json')
     acc_info = response.json()['data']
     if not acc_info:
         raise Exception('No data found, Please user user_login() to log in')
     return acc_info
+
+
+def user_name_available(name):
+    """
+    Is the given account name available to create a new account?
+    """
+    data = {'user': str(name)}
+    response = requests.get(r'http://www.reddit.com/api/username_available.json', data=data)
+
 
 
 
