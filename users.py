@@ -1,67 +1,32 @@
 __author__ = 'idclark'
-import requests
+import requests as r
 
-def get_user_overview(client, user, sort='top', limit=25, t=all):
+
+def get_user_activity(activity, user, limit, sort='top', time=all):
+    """Retrieve a user's activity, choice of:
+       Overview, submissions, Comments, liked, disliked, hidden, saved, gilded
+
+       User: a valid reddit username
+       limit: a limit on the number of items retrieved, max is 100
+       sort: sorting criteria, 'hot', 'top', 'new', 'controversial'
+       time: alltime, year, month, day, week, or hour
+    """
+    activity_args = ['overview', 'submitted', 'comments', 'liked', 'disliked', 'hidden', 'saved', 'gilded']
+    data = {'activity': activity, 'user': user, 'sort': sort, 'limit': limit, 'time': str(time)}
+    if data['activity'] not in activity_args:
+        raise Exception('Please enter a correct activity: ' + activity_args)
+
+    url = r'http://www.reddit.com/user/{u}/{a}.json'.format(u=user, a=activity)
+    response = r.get(url, data=data)
+    user_activity = response.content
+    return user_activity
+
+
+def about_user(username):
+    """
+     retrieve an overview for the given reddit account.
     """
 
-    """
-    user_information = {'user': user, 'sort': sort, 'limit': limit, 't': str(t)}
-    url = r'http://www.reddit.com/user/{u}/about.json'.format(u=user)
-    response = client.get(url, data=user_information)
-    overview = response.content
-    return overview
-
-
-def get_user_submissions(client, user, sort='top', limit=25, t=all):
-    """
-
-    """
-    user_information = {'user': user, 'sort': sort, 'limit': limit, 't': str(t)}
-    url = r'http://www.reddit.com/user/{u}/submitted.json'.format(u=user)
-    response = client.get(url, data=user_information)
-    submissions = response.content
-    return submissions
-
-
-def get_user_comments(client, user, sort='top', limit=25, t=all):
-    """
-
-    """
-    user_information = {'user': user, 'sort': sort, 'limit': limit, 't': str(t)}
-    url = r'http://www.reddit.com/user/{u}/comments.json'.format(u=user)
-    response = client.get(url, data=user_information)
-    comments = response.content
-    return comments
-
-
-def get_liked(user, sort='top', limit=25, t=all):
-    user_information = {'user': user, 'sort': sort, 'limit': limit, 't': str(t)}
-    url = r'http://www.reddit.com/user/{u}/comments.json'.format(u=user)
-    response = client.get(url, data=user_information)
-    comments = response.content
-    return comments
-
-
-
-def get_disliked(user, sort='top', limit=25, t=all):
-    user_information = {'user': user, 'sort': sort, 'limit': limit, 't': str(t)}
-     url = r'http://www.reddit.com/user/{u}/comments.json'.format(u=user)
-    response = client.get(url, data=user_information)
-    comments = response.content
-    return comments
-
-
-def get_hidden(user, sort='top', limit=25, t=all):
-    user_information = {'user': user, 'sort': sort, 'limit': limit, 't': str(t)}
-    user, sort='top', limit=25, t=all url = r'http://www.reddit.com/user/{u}/comments.json'.format(u=user)
-    response = client.get(url, data=user_information)
-    comments = response.content
-    return comments
-    
-
-def get_saved(user, sort='top', limit=25, t=all):
-    user_information = {'user': user, 'sort': sort, 'limit': limit, 't': str(t)}
-    url = r'http://www.reddit.com/user/{u}/comments.json'.format(u=user)
-    response = client.get(url, data=user_information)
-    comments = response.content
-    return comments
+    url = r'http://www.reddit.com/user/{u}/about.json'.format(u=username)
+    response = r.get(url)
+    return response.content
