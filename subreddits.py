@@ -1,14 +1,23 @@
-import requests
+__author__ = 'idclark'
+import requests as r
 
-def get_subreddit_info(limit, sr, sort, **kwargs):
-    """client: a user_login() session
-       limit: num of stories returned from 1:100
-       sr: subreddit or serries using +
-       sort: top, hot, or new
-       **kwargs: unknown params """
 
-    params = {'limit' : limit}.update(kwargs)
-    url = r'http://www.reddit.com/r/{sr}/{sort}.json'.format(sr=sr, sort=sort)
-    r = client.get(url, params=params)
-    r.json()
-    return r.json()
+def about_subreddit(sr):
+    """get an overview for a given  subreddit"""
+
+    url = r'http://www.reddit.com/r/{sr}/about.json'.format(sr=sr)
+    response = r.get(url)
+    return response.content
+
+
+def my_subreddits(status, limit):
+    """
+    return a list of subreddits for your account.
+     status: 'subscriber', 'moderator', 'contributor'
+     limit: max of 100
+    """
+    url = r'http://www.reddit.com/subreddits/mine/{st}.json'.format(st=status)
+    data = {'limit': limit}
+    response = r.get(url, data=data)
+    return response.content
+

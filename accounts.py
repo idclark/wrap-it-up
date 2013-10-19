@@ -71,6 +71,7 @@ def user_name_available(name):
     """
     data = {'user': str(name)}
     response = requests.get(r'http://www.reddit.com/api/username_available.json', data=data)
+    return response.content
 
 
 
