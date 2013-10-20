@@ -53,7 +53,7 @@ def delete_account(user, pword, confirm=True):
     return response
 
 
-def current_account_info(client):
+def current_account_overview(client):
     """
     client: the client created from the user_login() function.
             returns dict (json) of the current user's account overview.

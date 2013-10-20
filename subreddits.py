@@ -3,7 +3,7 @@ import requests as r
 
 
 def about_subreddit(sr):
-    """get an overview for a given  subreddit"""
+    """get an overview for a given subreddit"""
 
     url = r'http://www.reddit.com/r/{sr}/about.json'.format(sr=sr)
     response = r.get(url)
