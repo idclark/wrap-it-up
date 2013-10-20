@@ -1,8 +1,8 @@
 wrap-it-up
 ==========
 
-Toy python wrapper as I experiment with the [http://www.reddit.com/dev/api][Official Reddit API]
-It's not intended to compete with or be as comprehensive as [https://praw.readthedocs.org/en/latest/][PRAW]
+Toy python wrapper as I experiment with the [Official Reddit API](http://www.reddit.com/dev/api)
+It's not intended to compete with or be as comprehensive as [PRAW](https://praw.readthedocs.org/en/latest/)[PRAW]
 
 Usage
 ===========
