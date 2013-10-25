@@ -7,7 +7,7 @@ def about_subreddit(sr):
 
     url = r'http://www.reddit.com/r/{sr}/about.json'.format(sr=sr)
     response = r.get(url)
-    return response.content
+    return response.json()
 
 
 def my_subreddits(status, limit):
@@ -19,5 +19,38 @@ def my_subreddits(status, limit):
     url = r'http://www.reddit.com/subreddits/mine/{st}.json'.format(st=status)
     data = {'limit': limit}
     response = r.get(url, data=data)
+    return response.json()
+
+
+#this returns 404 ??TODO
+def recommend_subreddits(srnames, omit):
+    """
+    Inputs: srnames = comma sep list of subreddits
+    omit: subreddits to ommit from the reccommendation
+    """
+    data = {'srnames': list(srnames), 'omit': list(omit)}
+    url = r'http://www.reddit.com/api/subreddit_recommendations'
+    response = r.get(url, data=data)
     return response.content
+
+#TODO this returns an empty list...
+def search_by_topic(query):
+    """
+    search subreddits by inputting a given topic
+    """
+    data = {'query': str(query)}
+    url = r'http://www.reddit.com/api/subreddits_by_topic.json'
+    response = r.get(url, data=data)
+    return response.json()
+
+
+def subreddit_by_rank(criteria, limit):
+    """
+    returns list of subreddits according to given criteria
+     popular, new, banned
+    """
+    data = {'limit': limit}
+    url = r'http://www.reddit.com/subreddits/{c}.json'.format(c=criteria)
+    response = r.get(url, data)
+    return response.json()
 
