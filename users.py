@@ -2,7 +2,7 @@ __author__ = 'idclark'
 import requests as r
 
 
-def get_user_activity(activity, user, limit, sort='top', time=all):
+def get_user_activity(activity, user, limit=25, sort='top', time=all):
     """Retrieve a user's activity, choice of:
        Overview, submissions, Comments, liked, disliked, hidden, saved, gilded
 
@@ -18,8 +18,7 @@ def get_user_activity(activity, user, limit, sort='top', time=all):
 
     url = r'http://www.reddit.com/user/{u}/{a}.json'.format(u=user, a=activity)
     response = r.get(url, data=data)
-    user_activity = response.content
-    return user_activity
+    return response.json()['data']['children']
 
 
 def about_user(username):
@@ -29,4 +28,4 @@ def about_user(username):
 
     url = r'http://www.reddit.com/user/{u}/about.json'.format(u=username)
     response = r.get(url)
-    return response.content
+    return response.json()['data']
