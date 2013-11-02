@@ -20,7 +20,7 @@ def my_subreddits(client, status, limit):
     url = r'http://www.reddit.com/subreddits/mine/{st}.json'.format(st=status)
     data = {'limit': limit}
     response = client.get(url, data=data)
-    return response.json()
+    return response.json()['data']
 
 
 #TODO this returns 404 ??
@@ -46,7 +46,7 @@ def search_by_topic(query):
     return response.json()['data']
 
 
-def subreddits_by_rank(criteria, limit=25):
+def subreddits_by_rank(criteria, limit=3):
     """
     returns list of subreddits according to given criteria
      popular, new, banned
@@ -54,7 +54,7 @@ def subreddits_by_rank(criteria, limit=25):
     data = {'limit': limit}
     url = r'http://www.reddit.com/subreddits/{c}.json'.format(c=criteria)
     response = r.get(url, data=data)
-    return response.json()['data']
+    return response.json()['data']['children']
 
 
 def subreddit_list_submissions(subreddit, criteria):
