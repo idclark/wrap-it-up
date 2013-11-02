@@ -54,3 +54,16 @@ def subreddit_by_rank(criteria, limit):
     response = r.get(url, data)
     return response.json()
 
+
+def subreddit_listings(subreddit, criteria):
+    """
+    for a given subreddit, return a list of articles, sorted by the given criteria:
+    hot, new, random
+    """
+    criteria_choices = ['hot', 'new', 'random']
+    if criteria not in criteria_choices:
+        raise Exception('Please enter a valid criteria choice')
+    url = r'http://www.reddit.com/r/{s}/{c}.json'.format(s=subreddit, c=criteria)
+    response = r.get(url)
+    return response.json()
+
