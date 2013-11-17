@@ -25,6 +25,6 @@ def test_subreddits_by_rank():
     assert rank[0]['data']['url'] == '/r/pics/'
 
 
-def test_subreddit_list_submissions():
-    running_subs = s.subreddit_list_submissions('running', 'hot')
-    assert running_subs[0]['data']['title'] == 'This is Sunday: What were your running achievements this week?'
+def test_list_subreddit_submissions():
+    running_subs = s.list_subreddit_submissions('running', 'hot')
+    assert running_subs[0]['data']['title'] == 'Map of today\'s run with some 70 other people for my country\'s independence day'
