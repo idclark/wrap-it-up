@@ -10,6 +10,8 @@ def get_user_activity(activity, user, limit=25, sort='top', time=all):
        limit: a limit on the number of items retrieved, max is 100
        sort: sorting criteria, 'hot', 'top', 'new', 'controversial'
        time: alltime, year, month, day, week, or hour
+
+       > my_activity = get_user_activity('submissions', 'user_name', sort='hot', time='year')
     """
     activity_args = ['overview', 'submitted', 'comments', 'liked', 'disliked', 'hidden', 'saved', 'gilded']
     data = {'activity': activity, 'user': user, 'sort': sort, 'limit': limit, 'time': str(time)}
@@ -24,6 +26,8 @@ def get_user_activity(activity, user, limit=25, sort='top', time=all):
 def about_user(username):
     """
      retrieve an overview for the given reddit account.
+
+     > user_info = about_user('user_name')
     """
 
     url = r'http://www.reddit.com/user/{u}/about.json'.format(u=username)

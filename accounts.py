@@ -4,8 +4,11 @@ import requests
 
 def user_login(user_name, password, bot_desc):
     """ user_name: a valid reddit username
-    password: the respective password to the user name
-    bot_desc: the name of the bot to be used in the header dict """
+    password: the password to the user name
+    bot_desc: the name of the bot to be used in the header dict
+    returns a Requests.session() client that can passed into other functions that require a valid user.
+
+    > foo_user = user_login('your_name', 'your_password', 'description') """
 
     user_information = {'user': user_name,
                         'passwd': password,
@@ -24,11 +27,18 @@ def user_login(user_name, password, bot_desc):
     client.user = user_name
     return client
 
+
 # client is required to get around captcha
 def register_account(client, user, pword, rem=True, captcha=None):
     """
-    Create a new Reddit account via a valid reddit account. log in with user_login()
-    one logged in, you can register new accounts every five minutes without entering captcha.
+    Create a new Reddit account:
+    log in with user_login()
+    once logged in, you can register new accounts every five minutes without entering captcha.
+    user: the username of the new account you wish to create
+    pword: a password for the account
+    rem: should the session cookie last beyond the current browser session. default TRUE
+
+    > new_account = register_account(client, 'foo_user_new', 'a_password')
     """
     user_information = {'user': user,
                         'passwd': pword,
@@ -43,12 +53,16 @@ def register_account(client, user, pword, rem=True, captcha=None):
     return response
 
 
-def delete_account(user, pword, confirm=True):
+def delete_account(client, user, pword, confirm=True):
     """
     LOGIN REQUIRED. input a user and password. confirmation default is True
+    Same as register_account a valid client session must be passed in to the function
+    user: the account username you wish to delete
+    pword: password for the account
+
+    > deleted = delete_account(client, 'username', 'password')
     """
     data = {'user': user, 'passwd': pword, 'confirm': confirm, 'api_type': 'json'}
-    client = user_login(user, pword, 'foo_bar')
     response = client.post(r'http://www.reddit.com/api/delete_user', data=data)
     return response
 
