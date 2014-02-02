@@ -33,7 +33,7 @@ def recommend_subreddits(srnames, omit):
     Inputs: srnames = comma sep list of subreddits
     omit: subreddits to ommit from the reccommendation
     """
-    data = {'srnames': list(srnames), 'omit': list(omit)}
+    data = {'srnames': ",".join(srnames), 'omit': ",".join(omit)}
     url = r'http://www.reddit.com/api/subreddit_recommendations'
     response = r.get(url, data=data)
     return response.content

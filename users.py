@@ -30,6 +30,6 @@ def about_user(username):
      > user_info = about_user('user_name')
     """
 
-    url = r'http://www.reddit.com/user/{u}/about.json'.format(u=username)
+    url = r'http://wwwr.reddit.com/user/{u}/about.json'.format(u=username)
     response = r.get(url)
     return response.json()['data']
