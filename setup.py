@@ -9,7 +9,10 @@ setup(
     author = 'Ian Clark',
     author_email = 'idclark13@gmail.com',
     url = 'https://github.com/idclark/wrap-it-up',   # use the URL to the github repo
-    download_url = 'https://github.com/peterldowns/mypackage/tarball/0.1', # I'll explain this in a second
+    download_url = 'https://github.com/idclark/wrap-it-up', # I'll explain this in a second
     keywords = ['wrapper', 'reddit'], # arbitrary keywords
     classifiers = [],
+    long_description=open('README.txt').read(),
+    install_requires=[
+        "requests >= 2.2"],
     )
