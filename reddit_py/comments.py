@@ -15,7 +15,8 @@ def comments_from_article(subreddit, article, sort):
         raise Exception('Please select a valid sort criteria')
     url = r'http://www.reddit.com/r/{s}/comments/{a}.json'.format(s=subreddit, a=article)
     data = {'sort': sort}
-    response = r.get(url, data=data)
+    headers = {'User-Agent' : 'reddit_py comments'}
+    response = r.get(url, data=data, headers=headers)
     return response.json()
 
 
